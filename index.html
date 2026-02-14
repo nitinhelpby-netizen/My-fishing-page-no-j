@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NITIN KUMAR SINGH NGO</title>
+
+<style>
+body{
+  margin:0;
+  font-family:Arial, sans-serif;
+  background:#0f172a;
+  color:#fff;
+}
+.container{
+  max-width:900px;
+  margin:auto;
+  padding:20px;
+}
+.card{
+  background:#1e293b;
+  padding:20px;
+  border-radius:10px;
+  margin-top:20px;
+  box-shadow:0 5px 15px rgba(0,0,0,0.5);
+}
+button{
+  padding:10px 15px;
+  background:#f97316;
+  border:none;
+  border-radius:6px;
+  color:#fff;
+  font-weight:bold;
+  cursor:pointer;
+  margin-top:10px;
+}
+button:hover{
+  opacity:0.9;
+}
+input{
+  width:100%;
+  padding:12px;
+  margin-top:6px;
+  border-radius:6px;
+  border:none;
+  font-size:16px;
+}
+.hidden{
+  display:none;
+}
+.receipt, .payment{
+  background:#111827;
+  padding:20px;
+  transform:rotate(-2deg);
+  border-radius:10px;
+}
+h1{
+  text-align:center;
+}
+hr{
+  margin:15px 0;
+}
+img{
+  display:block;
+  margin:auto;
+}
+a{
+  text-decoration:none;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<h1>NITIN KUMAR SINGH NGO</h1>
+
+<!-- ================= HOME PAGE ================= -->
+<div id="home" class="card">
+  <h2>Apply Assistance Program</h2>
+
+  <p>Emergency Personal Loan</p>
+  <button onclick="openReceipt()">Apply</button>
+
+  <p>Short-term Credit Loan</p>
+  <button onclick="openReceipt()">Apply</button>
+
+  <p>Loan Against Assets</p>
+  <button onclick="openReceipt()">Apply</button>
+
+  <p>Business Expansion Follow</p>
+  <button onclick="openReceipt()">Apply</button>
+</div>
+
+<!-- ================= RECEIPT PAGE ================= -->
+<div id="receiptPage" class="card hidden">
+  <div class="receipt">
+    <h2>Application Receipt</h2>
+
+    <p>Stock Market Verification — ₹199</p>
+    <p>Withdrawal Processing — ₹449.10</p>
+    <p>GST — ₹315.90</p>
+    <p>Administrative Handling — ₹422.10</p>
+    <p>Documentation Charge — ₹410</p>
+    <p>Receipt Charge — ₹990.11</p>
+
+    <hr>
+
+    <h3>Total Application Charges: ₹2786.21</h3>
+
+    <button onclick="openPayment()">Proceed to Payment</button>
+
+    <p style="margin-top:20px;">
+    Requested Assistance Amount: ₹10,000  
+    <br>
+    (Subject to NGO review & approval)
+    </p>
+  </div>
+</div>
+
+<!-- ================= PAYMENT PAGE ================= -->
+<div id="paymentPage" class="card hidden">
+  <div class="payment">
+    <h2>Payment Verification</h2>
+    <p>कृपया ₹2786.21 भुगतान करें</p>
+
+    <h3>UPI ID: niyy@paytm</h3>
+
+    <!-- QR Code -->
+    <img src="https://chart.googleapis.com/chart?chs=250x250&cht=qr&chl=upi://pay?pa=niyy@paytm&pn=Nitin%20Kumar%20Singh&tn=NGO%20Assistance&am=2786.21&cu=INR&chld=L|1" alt="UPI QR Code">
+
+    <br>
+    <!-- Pay Now Button -->
+    <a href="upi://pay?pa=niyy@paytm&pn=Nitin%20Kumar%20Singh&tn=NGO%20Assistance&am=2786.21&cu=INR" target="_blank">
+      <button>Pay Now</button>
+    </a>
+
+    <br><br>
+    <button onclick="openBank()">Payment Done? Proceed to Bank Verification</button>
+  </div>
+</div>
+
+<!-- ================= BANK FORM PAGE ================= -->
+<div id="bankPage" class="card hidden">
+  <h2>Bank Verification Form</h2>
+
+  <label>Bank Account Number</label>
+  <input type="text" id="acc">
+
+  <label>IFSC Code</label>
+  <input type="text" id="ifsc">
+
+  <label>Account Holder Name</label>
+  <input type="text" id="name">
+
+  <button onclick="submitForm()">Submit Application</button>
+</div>
+
+</div>
+
+<!-- ================= SCRIPT ================= -->
+<script>
+
+function openReceipt(){
+  document.getElementById("home").classList.add("hidden");
+  document.getElementById("receiptPage").classList.remove("hidden");
+}
+
+function openPayment(){
+  document.getElementById("receiptPage").classList.add("hidden");
+  document.getElementById("paymentPage").classList.remove("hidden");
+}
+
+function openBank(){
+  document.getElementById("paymentPage").classList.add("hidden");
+  document.getElementById("bankPage").classList.remove("hidden");
+}
+
+function submitForm(){
+  let acc = document.getElementById("acc").value;
+  let ifsc = document.getElementById("ifsc").value;
+  let name = document.getElementById("name").value;
+
+  if(!acc || !ifsc || !name){
+    alert("कृपया सभी डिटेल्स भरें।");
+    return;
+  }
+
+  if(!/^\d{9,18}$/.test(acc)){
+    alert("कृपया सही अकाउंट नंबर डालें (9-18 डिजिट)।");
+    return;
+  }
+
+  if(!/^[A-Za-z]{4}0[A-Z0-9]{6}$/.test(ifsc)){
+    alert("कृपया सही IFSC कोड डालें।");
+    return;
+  }
+
+  alert("आपका आवेदन सफलतापूर्वक जमा हो गया। हमारी टीम आपसे संपर्क करेगी।");
+
+  // फॉर्म सबमिट के बाद Reset कर के Home दिखाएँ
+  document.getElementById("bankPage").classList.add("hidden");
+  document.getElementById("home").classList.remove("hidden");
+  document.getElementById("acc").value = '';
+  document.getElementById("ifsc").value = '';
+  document.getElementById("name").value = '';
+}
+</script>
+
+</body>
+</html>
